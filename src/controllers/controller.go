@@ -11,8 +11,8 @@ import (
 var receipts = make(map[string]models.Receipt)
 
 // POST /receipts/process
-// postReceipts takes in a JSON receipt and responds with a JSON object containing an id for the receipt
-func ReceiptID(c *gin.Context) {
+// Process takes in a JSON receipt and responds with a JSON object containing an id for the receipt
+func Process(c *gin.Context) {
 
     // The new receipt
     var newReceipt models.Receipt
@@ -33,7 +33,7 @@ func ReceiptID(c *gin.Context) {
 }
 
 // GET /receipts/{id}/points
-// getPoints responds with a JSON object containing the number of points awarded
+// GetPoints responds with a JSON object containing the number of points awarded
 func GetPoints(c *gin.Context) {
 
     // Retrieves the ID from the URL

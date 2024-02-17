@@ -7,7 +7,7 @@ import (
 
 func main() {
     r := gin.Default()
-    r.POST("/receipts/process", controllers.ReceiptID)
+    r.POST("/receipts/process", controllers.Process)
     r.GET("/receipts/:id/points", controllers.GetPoints)
     r.Run(":8080")
 }
