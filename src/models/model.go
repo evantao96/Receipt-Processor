@@ -13,11 +13,11 @@ type Item struct {
 
 // receipt represents data about a purchase receipt
 type Receipt struct {
-    Retailer        string      `json:"retailer"`
-    PurchaseDate    string      `json:"purchaseDate"`
-    PurchaseTime    string      `json:"purchaseTime"`
-    Items           []Item      `json:"items"`
-    Total           string      `json:"total"`
+    Retailer        string      `json:"retailer" binding:"required"`
+    PurchaseDate    string      `json:"purchaseDate" binding:"required"`
+    PurchaseTime    string      `json:"purchaseTime" binding:"required"`
+    Items           []Item      `json:"items" binding:"required"`
+    Total           string      `json:"total" binding:"required"`
 }
 
 /*  The Receipt model contains functions which calculate the number of points, 

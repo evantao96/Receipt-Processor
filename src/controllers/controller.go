@@ -8,7 +8,7 @@ import (
 )
 
 // map of all receipt IDs to JSON receipt objects
-var receipts = make(map[string]models.Receipt)
+var allReceipts = make(map[string]models.Receipt)
 
 // POST /receipts/process
 // Process takes in a JSON receipt and responds with a JSON object containing an id for the receipt
@@ -26,7 +26,7 @@ func Process(c *gin.Context) {
     id := uuid.New()
 
     // Add the new receipt ID and JSON object to the receipts map
-    receipts[id.String()] = newReceipt
+    allReceipts[id.String()] = newReceipt
 
     // Returns a JSON object with the ID
     c.JSON(http.StatusOK, gin.H{"id": id.String()})
@@ -40,7 +40,7 @@ func GetPoints(c *gin.Context) {
     id := c.Param("id")
 
     // Looks up the receipt in the receipts map
-    newReceipt, ok := receipts[id]
+    myReceipt, ok := allReceipts[id]
 
     // if the ID does not exist in the receipts map, return
     if !ok {
@@ -49,12 +49,12 @@ func GetPoints(c *gin.Context) {
 
     // The number of points awarded to newReceipt
     points := 0
-    points += models.GetAlphaPoints(newReceipt)
-    points += models.GetCentsPoints(newReceipt)
-    points += models.GetNumItemsPoints(newReceipt)
-    points += models.GetDayPoints(newReceipt)
-    points += models.GetTimePoints(newReceipt)
-    points += models.GetItemsPoints(newReceipt)
+    points += models.GetAlphaPoints(myReceipt)
+    points += models.GetCentsPoints(myReceipt)
+    points += models.GetNumItemsPoints(myReceipt)
+    points += models.GetDayPoints(myReceipt)
+    points += models.GetTimePoints(myReceipt)
+    points += models.GetItemsPoints(myReceipt)
 
     // Returns an object specifying the points awarded
     c.JSON(http.StatusOK, gin.H{"points": points})
