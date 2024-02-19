@@ -44,7 +44,7 @@ func GetPoints(c *gin.Context) {
 
     // if the ID does not exist in the receipts map, return
     if !ok {
-        return 
+        return
     }
 
     // The number of points awarded to newReceipt

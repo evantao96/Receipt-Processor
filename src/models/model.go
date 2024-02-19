@@ -3,6 +3,7 @@ package models
 import (
     "strings"
     "strconv"
+    "time"
 )
 
 // item represents data about a receipt item
@@ -74,7 +75,8 @@ func GetNumItemsPoints(receipt Receipt) int {
 func GetDayPoints(receipt Receipt) int {
 
     // The day of the purchase date
-    day,_ := strconv.Atoi(receipt.PurchaseDate[len(receipt.PurchaseDate)-2:])
+    date,_ := time.Parse("2006-01-02", receipt.PurchaseDate)
+    day := date.Day()
 
     // 6 points if the day in the purchase date is odd
     if day % 2 == 1 {
@@ -89,9 +91,11 @@ func GetTimePoints(receipt Receipt) int {
 
     // The hour of the purchase time 
     hour,_ := strconv.Atoi(receipt.PurchaseTime[:2])
+    // hour := receipt.PurchaseTime.Hour()
 
     // The minutes of the purchase time
     minutes,_ := strconv.Atoi(receipt.PurchaseTime[3:])
+    // minutes := receipt.PurchaseTime.Minute()
 
     // 10 points if the time of purchase is after 2:00pm and before 4:00pm
     if (hour == 14 && minutes > 0) || hour == 15 {
