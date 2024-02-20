@@ -5,6 +5,7 @@ import (
     "github.com/gin-gonic/gin"
     "github.com/google/uuid"
     "src/models"
+    "fmt"
 )
 
 // map of all receipt IDs to JSON receipt objects
@@ -19,6 +20,7 @@ func Process(c *gin.Context) {
 
     // Call BindJSON to bind the received JSON to newReceipt
     if err := c.BindJSON(&newReceipt); err != nil {
+        fmt.Println(err)
         return
     }
 

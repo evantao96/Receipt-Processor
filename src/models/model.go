@@ -9,16 +9,16 @@ import (
 // item represents data about a receipt item
 type Item struct {
     ShortDescription    string       `json:"shortDescription" binding:"required"`
-    Price               json.Number  `json:"price" binding:"required,numeric"`
+    Price               json.Number  `json:"price" binding:"required,numeric,excludesall=-"`
 }
 
 // receipt represents data about a purchase receipt
 type Receipt struct {
     Retailer        string      `json:"retailer" binding:"required"`
     PurchaseDate    string      `json:"purchaseDate" binding:"required"`
-    PurchaseTime    string      `json:"purchaseTime" binding:"required"`
+    PurchaseTime    string   `json:"purchaseTime" binding:"required"`
     Items           []Item      `json:"items" binding:"required,dive"`
-    Total           json.Number  `json:"total" binding:"required,numeric"`
+    Total           json.Number  `json:"total" binding:"required,numeric,excludesall=-"`
 }
 
 /*  The Receipt model contains functions which calculate the number of points, 
@@ -101,10 +101,13 @@ func GetTimePoints(receipt Receipt) int {
 
     // The hour of the purchase time 
     hour,_ := strconv.Atoi(receipt.PurchaseTime[:2])
+    // fmt.Println(receipt.PurchaseTime)
+    // fmt.Println(receipt.PurchaseTime.Hour())
     // hour := receipt.PurchaseTime.Hour()
 
     // The minutes of the purchase time
     minutes,_ := strconv.Atoi(receipt.PurchaseTime[3:])
+    // fmt.Println(receipt.PurchaseTime.Minute())
     // minutes := receipt.PurchaseTime.Minute()
 
     // 10 points if the time of purchase is after 2:00pm and before 4:00pm
