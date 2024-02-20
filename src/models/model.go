@@ -3,12 +3,13 @@ package models
 import (
     "strings"
     "strconv"
+    "encoding/json"
 )
 
 // item represents data about a receipt item
 type Item struct {
     ShortDescription    string  `json:"shortDescription" binding:"required"`
-    Price               string  `json:"price" binding:"required"`
+    Price               json.Number  `json:"price" binding:"required,numeric,excludesall=-."`
 }
 
 // receipt represents data about a purchase receipt
@@ -16,7 +17,7 @@ type Receipt struct {
     Retailer        string      `json:"retailer" binding:"required"`
     PurchaseDate    string      `json:"purchaseDate" binding:"required"`
     PurchaseTime    string      `json:"purchaseTime" binding:"required"`
-    Items           []Item      `json:"items" binding:"required"`
+    Items           []Item      `json:"items" binding:"required,dive"`
     Total           string      `json:"total" binding:"required"`
 }
 
@@ -109,7 +110,7 @@ func GetItemsPoints(receipt Receipt) int {
     // Iterate through items on the receipt
     for _, c := range receipt.Items {
         desc := c.ShortDescription
-        price,_ := strconv.ParseFloat(c.Price, 64)
+        price,_ := c.Price.Float64()
 
         // If the trimmed length of the item description is a multiple of 3
         if len(strings.TrimSpace(desc)) % 3 == 0 {
