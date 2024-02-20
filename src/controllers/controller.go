@@ -50,7 +50,8 @@ func GetPoints(c *gin.Context) {
     // The number of points awarded to newReceipt
     points := 0
     points += models.GetAlphaPoints(myReceipt)
-    points += models.GetCentsPoints(myReceipt)
+    points += models.GetRoundTotalPoints(myReceipt)
+    points += models.GetMultiple25Points(myReceipt)
     points += models.GetNumItemsPoints(myReceipt)
     points += models.GetDayPoints(myReceipt)
     points += models.GetTimePoints(myReceipt)

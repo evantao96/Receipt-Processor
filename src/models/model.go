@@ -8,8 +8,8 @@ import (
 
 // item represents data about a receipt item
 type Item struct {
-    ShortDescription    string  `json:"shortDescription" binding:"required"`
-    Price               json.Number  `json:"price" binding:"required,numeric,excludesall=-."`
+    ShortDescription    string       `json:"shortDescription" binding:"required"`
+    Price               json.Number  `json:"price" binding:"required,numeric"`
 }
 
 // receipt represents data about a purchase receipt
@@ -18,7 +18,7 @@ type Receipt struct {
     PurchaseDate    string      `json:"purchaseDate" binding:"required"`
     PurchaseTime    string      `json:"purchaseTime" binding:"required"`
     Items           []Item      `json:"items" binding:"required,dive"`
-    Total           string      `json:"total" binding:"required"`
+    Total           json.Number  `json:"total" binding:"required,numeric"`
 }
 
 /*  The Receipt model contains functions which calculate the number of points, 
@@ -44,16 +44,29 @@ func GetAlphaPoints(receipt Receipt) int {
     return count
 }
 
-// Returns the number of points earned based on the cents in the receipt
-func GetCentsPoints(receipt Receipt) int {
+// Returns 50 points if the total is a round dollar amount with no cents
+func GetRoundTotalPoints(receipt Receipt) int {
 
     // The number of cents in the total
-    cents,_ := strconv.Atoi(receipt.Total[strings.Index(receipt.Total, ".")+1:])
+    total,_ := receipt.Total.Float64()
+    cents := int(total * 100)
 
-    if cents == 0 {
+    if cents % 100 == 0 {
         return 50 // 50 points if the total is a round dollar amount with no cents
-    } else if cents % 25 == 0 {  
-        return 25 // 25 points if the total is a multiple of 0.25
+    } else {
+        return 0
+    }
+}
+
+// Returns 25 points if the total is a multiple of 0.25
+func GetMultiple25Points(receipt Receipt) int {
+
+    // The number of cents in the total
+    total,_ := receipt.Total.Float64()
+    cents := int(total * 100)
+
+    if cents % 25 == 0 {  
+        return 25 // 25 points if the total is a multiple of 25
     } else {
         return 0
     }
