@@ -3,13 +3,12 @@ package models
 import (
     "strings"
     "strconv"
-    "time"
 )
 
 // item represents data about a receipt item
 type Item struct {
-    ShortDescription    string  `json:"shortDescription"`
-    Price               string  `json:"price"`
+    ShortDescription    string  `json:"shortDescription" binding:"required"`
+    Price               string  `json:"price" binding:"required"`
 }
 
 // receipt represents data about a purchase receipt
@@ -33,8 +32,6 @@ func GetAlphaPoints(receipt Receipt) int {
 
     // the number of alphanumeric characters in the retailer name
     count := 0
-
-    // if receipt does not have a retailer? 
 
     for _, c := range receipt.Retailer {
         if strings.Index(alphanumeric, string(c)) >= 0 {
@@ -75,8 +72,7 @@ func GetNumItemsPoints(receipt Receipt) int {
 func GetDayPoints(receipt Receipt) int {
 
     // The day of the purchase date
-    date,_ := time.Parse("2006-01-02", receipt.PurchaseDate)
-    day := date.Day()
+    day,_ := strconv.Atoi(receipt.PurchaseDate[len(receipt.PurchaseDate)-2:])
 
     // 6 points if the day in the purchase date is odd
     if day % 2 == 1 {
