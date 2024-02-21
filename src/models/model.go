@@ -120,8 +120,8 @@ func GetTimePoints(receipt Receipt) int {
     }
 }
 
-// Returns the number of points earned based on the items in the receipt
-func GetItemsPoints(receipt Receipt) int {
+// Returns the number of points earned based on the description of the items in the receipt
+func GetDescriptionPoints(receipt Receipt) int {
 
     sum := 0
 

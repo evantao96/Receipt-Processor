@@ -58,7 +58,7 @@ func GetPoints(c *gin.Context) {
     points += models.GetNumItemsPoints(myReceipt)
     points += models.GetDayPoints(myReceipt)
     points += models.GetTimePoints(myReceipt)
-    points += models.GetItemsPoints(myReceipt)
+    points += models.GetDescriptionPoints(myReceipt)
 
     // Returns an object specifying the points awarded
     c.JSON(http.StatusOK, gin.H{"points": points})
