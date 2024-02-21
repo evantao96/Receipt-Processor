@@ -6,6 +6,8 @@ This program was written in Go and containerized with Docker. Please run with th
 
 `cd src && docker build -t receipt . && docker run -p 8080:8080 receipt` 
 
+---
+
 ## Overview ##
 
 Build a webservice that fulfils the documented API. The API is described below. A formal definition is provided 
