@@ -25,6 +25,7 @@ type Receipt struct {
     // validates that the items array is present, validates each item in the array
     Items           []Item      `json:"items" binding:"required,dive"`
     // validates that the total is present and a positive number
+    // Total           json.Number `json:"total" binding:"required,numeric,ne=0,excludes=-"`
     Total           json.Number `json:"total" binding:"required,numeric,ne=0,excludes=-"`
 }
 
