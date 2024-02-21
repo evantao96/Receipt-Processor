@@ -8,16 +8,23 @@ import (
 
 // item represents data about a receipt item
 type Item struct {
+    // validates that the description is present
     ShortDescription    string       `json:"shortDescription" binding:"required"`
+    // validates that the price is present and a positive number
     Price               json.Number  `json:"price" binding:"required,numeric,ne=0,excludes=-"`
 }
 
 // receipt represents data about a purchase receipt
 type Receipt struct {
+    // validates that the retailer is present
     Retailer        string      `json:"retailer" binding:"required"`
+    // validates that the purchase date is in the appropriate date format
     PurchaseDate    string      `json:"purchaseDate" binding:"required,datetime=2006-01-02"`
+    // validates that the purchase time is in the appropriate time format
     PurchaseTime    string      `json:"purchaseTime" binding:"required,datetime=15:04"`
+    // validates that the items array is present, validates each item in the array
     Items           []Item      `json:"items" binding:"required,dive"`
+    // validates that the total is present and a positive number
     Total           json.Number `json:"total" binding:"required,numeric,ne=0,excludes=-"`
 }
 
