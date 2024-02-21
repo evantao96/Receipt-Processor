@@ -46,6 +46,7 @@ func GetPoints(c *gin.Context) {
 
     // if the ID does not exist in the receipts map, return
     if !ok {
+        c.JSON(http.StatusNotFound, "Receipt ID was not found")
         return
     }
 
