@@ -9,16 +9,16 @@ import (
 // item represents data about a receipt item
 type Item struct {
     ShortDescription    string       `json:"shortDescription" binding:"required"`
-    Price               json.Number  `json:"price" binding:"required,numeric,excludes=-,ne=0"`
+    Price               json.Number  `json:"price" binding:"required,numeric,ne=0,excludes=-"`
 }
 
 // receipt represents data about a purchase receipt
 type Receipt struct {
     Retailer        string      `json:"retailer" binding:"required"`
-    PurchaseDate    string      `json:"purchaseDate" binding:"required"`
-    PurchaseTime    string      `json:"purchaseTime" binding:"required"`
+    PurchaseDate    string      `json:"purchaseDate" binding:"required,datetime=2006-01-02"`
+    PurchaseTime    string      `json:"purchaseTime" binding:"required,datetime=15:04"`
     Items           []Item      `json:"items" binding:"required,dive"`
-    Total           json.Number `json:"total" binding:"required,numeric,excludes=-,ne=0"`
+    Total           json.Number `json:"total" binding:"required,numeric,ne=0,excludes=-"`
 }
 
 /*  The Receipt model contains functions which calculate the number of points, 
