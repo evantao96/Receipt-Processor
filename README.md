@@ -1,10 +1,12 @@
+# Receipt Processor #
+
 ## Running the Program ##
 
 This program was written in Go and containerized with Docker. Please run with the following command:
 
 `cd src && docker build -t receipt . && docker run -p 8080:8080 receipt` 
 
-# Receipt Processor
+## Overview ##
 
 Build a webservice that fulfils the documented API. The API is described below. A formal definition is provided 
 in the [api.yml](./api.yml) file, but the information in this README is sufficient for completion of this challenge. We will use the 
