@@ -5,13 +5,11 @@ import (
 	"src/models"
 )
 
-var r models.Receipt
-
 func TestAlpha(t *testing.T){
 
-	r.Retailer = "Target"
+	retailer := "Target"
 
-	got := models.GetAlphaPoints(r)
+	got := models.GetAlphaPoints(retailer)
 	want := 6
 
 	if got != want {
@@ -21,9 +19,9 @@ func TestAlpha(t *testing.T){
 
 func TestRoundTotal(t *testing.T){
 
-	r.Retailer = "1.00"
+	total := `"1.00"`
 
-	got := models.GetRoundTotalPoints(r)
+	got := models.GetRoundTotalPoints(total)
 	want := 50
 
 	if got != want {
@@ -33,9 +31,9 @@ func TestRoundTotal(t *testing.T){
 
 func TestMultiple25(t *testing.T){
 
-	r.Retailer = "1.00"
+	total := `"1.00"`
 
-	got := models.GetMultiple25Points(r)
+	got := models.GetMultiple25Points(total)
 	want := 25
 
 	if got != want {
@@ -45,11 +43,11 @@ func TestMultiple25(t *testing.T){
 
 func TestNumItems(t *testing.T){
 
-	r.Items = []models.Item{
+	items := []models.Item{
 		{"Pepsi - 12-oz", "1.25"},
 	}
 
-	got := models.GetNumItemsPoints(r)
+	got := models.GetNumItemsPoints(items)
 	want := 0
 
 	if got != want {
@@ -59,9 +57,9 @@ func TestNumItems(t *testing.T){
 
 func TestDay(t *testing.T){
 
-	r.PurchaseDate = "2022-01-02"
+	purchaseDate := "2022-01-02"
 
-	got := models.GetDayPoints(r)
+	got := models.GetDayPoints(purchaseDate)
 	want := 0
 
 	if got != want {
@@ -71,9 +69,9 @@ func TestDay(t *testing.T){
 
 func TestTime(t *testing.T){
 
-	r.PurchaseTime = "13:13"
+	purchaseTime := "13:13"
 
-	got := models.GetTimePoints(r)
+	got := models.GetTimePoints(purchaseTime)
 	want := 0
 
 	if got != want {
@@ -83,11 +81,11 @@ func TestTime(t *testing.T){
 
 func TestDescription(t *testing.T){
 
-	r.Items = []models.Item{
+	items := []models.Item{
 		{"Pepsi - 12-oz", "1.25"},
 	}
 
-	got := models.GetDescriptionPoints(r)
+	got := models.GetDescriptionPoints(items)
 	want := 0
 
 	if got != want {

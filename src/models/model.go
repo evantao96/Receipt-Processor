@@ -2,16 +2,16 @@ package models
 
 import (
     "strings"
-    "encoding/json"
+    "strconv"
     "time"
 )
 
 // item represents data about a receipt item
 type Item struct {
     // validates that the description is present
-    ShortDescription    string       `json:"shortDescription" binding:"required"`
+    ShortDescription    string  `json:"shortDescription" binding:"required"`
     // validates that the price is present and a positive number
-    Price               json.Number  `json:"price" binding:"required,numeric,ne=0,excludes=-"`
+    Price               string  `json:"price" binding:"required,numeric,ne=0,excludes=-"`
 }
 
 // receipt represents data about a purchase receipt
@@ -25,7 +25,7 @@ type Receipt struct {
     // validates that the items array is present, validates each item in the array
     Items           []Item      `json:"items" binding:"required,dive"`
     // validates that the total is present and a positive number
-    Total           json.Number `json:"total" binding:"required,numeric,ne=0,excludes=-"`
+    Total           string      `json:"total" binding:"required,numeric,ne=0,excludes=-"`
 }
 
 /*  The Receipt model contains functions which calculate the number of points, 
@@ -52,10 +52,10 @@ func GetAlphaPoints(myRetailer string) int {
 }
 
 // Returns 50 points if the total is a round dollar amount with no cents
-func GetRoundTotalPoints(myTotal json.Number) int {
+func GetRoundTotalPoints(myTotal string) int {
 
     // The number of cents in the total
-    fTotal,_ := myTotal.Float64()
+    fTotal,_ := strconv.ParseFloat(myTotal, 64)
     cents := int(fTotal * 100)
 
     if cents % 100 == 0 {
@@ -66,10 +66,10 @@ func GetRoundTotalPoints(myTotal json.Number) int {
 }
 
 // Returns 25 points if the total is a multiple of 0.25
-func GetMultiple25Points(myTotal json.Number) int {
+func GetMultiple25Points(myTotal string) int {
 
     // The number of cents in the total
-    fTotal,_ := myTotal.Float64()
+    fTotal,_ := strconv.ParseFloat(myTotal, 64)
     cents := int(fTotal * 100)
 
     if cents % 25 == 0 {  
@@ -128,7 +128,7 @@ func GetDescriptionPoints(myItems []Item) int {
     // Iterate through items on the receipt
     for _, c := range myItems {
         desc := c.ShortDescription
-        price,_ := c.Price.Float64()
+        price,_ := strconv.ParseFloat(c.Price, 64)
 
         // If the trimmed length of the item description is a multiple of 3
         if len(strings.TrimSpace(desc)) % 3 == 0 {
