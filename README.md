@@ -1,10 +1,14 @@
 # Receipt Processor #
 
-## Running the Program ##
+## User Instructions ##
 
-This program was written in Go and containerized with Docker. Please run with the following command:
+This program was written in Go and containerized with Docker. You can run the program by navigating into `src` and entering the following command:
 
-`cd src && docker build -t receipt . && docker run -p 8080:8080 receipt` 
+`docker build -t receipt . && docker run -p 8080:8080 receipt` 
+
+You can execute the unit tests by navigating into `src/tests` and entering the following command: 
+
+`go test -v`
 
 ---
 
