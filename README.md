@@ -6,6 +6,8 @@ This program was written in Go and containerized with Docker. You can run the pr
 
 `docker build -t receipt . && docker run -p 8080:8080 receipt` 
 
+--- 
+
 You can execute the unit tests by navigating into `src/tests` and entering the following command: 
 
 `go test -v`
