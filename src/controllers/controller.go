@@ -52,13 +52,13 @@ func GetPoints(c *gin.Context) {
 
     // The number of points awarded to newReceipt
     points := 0
-    points += models.GetAlphaPoints(myReceipt.Retailer)
-    points += models.GetRoundTotalPoints(myReceipt.Total)
-    points += models.GetMultiple25Points(myReceipt.Total)
-    points += models.GetNumItemsPoints(myReceipt.Items)
-    points += models.GetDayPoints(myReceipt.PurchaseDate)
-    points += models.GetTimePoints(myReceipt.PurchaseTime)
-    points += models.GetDescriptionPoints(myReceipt.Items)
+    points += models.GetAlphaPoints(myReceipt.Retailer) 
+            + models.GetRoundTotalPoints(myReceipt.Total)
+            + models.GetMultiple25Points(myReceipt.Total)
+            + models.GetNumItemsPoints(myReceipt.Items)
+            + models.GetDayPoints(myReceipt.PurchaseDate)
+            + models.GetTimePoints(myReceipt.PurchaseTime)
+            + models.GetDescriptionPoints(myReceipt.Items)
 
     // Returns an object specifying the points awarded
     c.JSON(http.StatusOK, gin.H{"points": points})
