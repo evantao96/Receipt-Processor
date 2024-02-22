@@ -5,39 +5,54 @@ import (
 	"src/models"
 )
 
+type modelTest struct {
+	arg string
+	expected int
+}
+
+var alphaTests = []modelTest{
+	modelTest{"Target", 6},
+	modelTest{"Walgreens", 9},
+	modelTest{"M&M Corner Market", 14},
+	modelTest{"Grove 34", 7},
+}
+
+var roundTotalTests = []modelTest{
+	modelTest{"1.25", 0},
+	modelTest{"2.50", 0},
+	modelTest{"35.35", 0},
+	modelTest{"9.00", 50},
+}
+
+var multiple25Tests = []modelTest{
+	modelTest{"1.25", 25},
+	modelTest{"2.65", 0},
+	modelTest{"0.25", 25},
+	modelTest{"9.00", 25},
+	modelTest{"8.75", 25},
+}
+
 func TestAlpha(t *testing.T){
-
-	retailer := "Target"
-
-	got := models.GetAlphaPoints(retailer)
-	want := 6
-
-	if got != want {
-		t.Errorf("got %d, wanted %d", got, want)
+	for _, test := range alphaTests{
+		if output := models.GetAlphaPoints(test.arg); output != test.expected {
+			t.Errorf("Output %d not equal to expected %d", output, test.expected)
+		}
 	}
 }
 
 func TestRoundTotal(t *testing.T){
-
-	total := `"1.00"`
-
-	got := models.GetRoundTotalPoints(total)
-	want := 50
-
-	if got != want {
-		t.Errorf("got %d, wanted %d", got, want)
+	for _, test := range roundTotalTests{
+		if output := models.GetRoundTotalPoints(test.arg); output != test.expected {
+			t.Errorf("Output %d not equal to expected %d", output, test.expected)
+		}
 	}
 }
 
 func TestMultiple25(t *testing.T){
-
-	total := `"1.00"`
-
-	got := models.GetMultiple25Points(total)
-	want := 25
-
-	if got != want {
-		t.Errorf("got %d, wanted %d", got, want)
+	for _, test := range multiple25Tests{
+		if output := models.GetMultiple25Points(test.arg); output != test.expected {
+			t.Errorf("Output %d not equal to expected %d", output, test.expected)
+		}
 	}
 }
 
