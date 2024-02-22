@@ -33,7 +33,7 @@ type Receipt struct {
  */
 
 // Returns the number of points earned based on the alphanumeric characters in the receipt
-func GetAlphaPoints(receipt Receipt) int {
+func GetAlphaPoints(myRetailer string) int {
 
     // alphanumeric characters 
     alphanumeric := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -41,7 +41,7 @@ func GetAlphaPoints(receipt Receipt) int {
     // the number of alphanumeric characters in the retailer name
     count := 0
 
-    for _, c := range receipt.Retailer {
+    for _, c := range myRetailer {
         if strings.Index(alphanumeric, string(c)) >= 0 {
             count++
         }
@@ -52,11 +52,11 @@ func GetAlphaPoints(receipt Receipt) int {
 }
 
 // Returns 50 points if the total is a round dollar amount with no cents
-func GetRoundTotalPoints(receipt Receipt) int {
+func GetRoundTotalPoints(myTotal json.Number) int {
 
     // The number of cents in the total
-    total,_ := receipt.Total.Float64()
-    cents := int(total * 100)
+    fTotal,_ := myTotal.Float64()
+    cents := int(fTotal * 100)
 
     if cents % 100 == 0 {
         return 50 // 50 points if the total is a round dollar amount with no cents
@@ -66,11 +66,11 @@ func GetRoundTotalPoints(receipt Receipt) int {
 }
 
 // Returns 25 points if the total is a multiple of 0.25
-func GetMultiple25Points(receipt Receipt) int {
+func GetMultiple25Points(myTotal json.Number) int {
 
     // The number of cents in the total
-    total,_ := receipt.Total.Float64()
-    cents := int(total * 100)
+    fTotal,_ := myTotal.Float64()
+    cents := int(fTotal * 100)
 
     if cents % 25 == 0 {  
         return 25 // 25 points if the total is a multiple of 25
@@ -80,21 +80,21 @@ func GetMultiple25Points(receipt Receipt) int {
 }
 
 // Returns the number of points earned based on the number of items in the receipt
-func GetNumItemsPoints(receipt Receipt) int {
+func GetNumItemsPoints(myItems []Item) int {
 
     // The number of items on the receipt
-    numItems := len(receipt.Items)
+    numItems := len(myItems)
 
     // 5 points for every two items on the receipt
     return 5 * (numItems / 2)
 }
 
 // Returns the number of points earned based on the purchase date of the receipt
-func GetDayPoints(receipt Receipt) int {
+func GetDayPoints(myPurchaseDate string) int {
 
     // The day of the purchase date
-    receiptDate,_ := time.Parse("2006-01-02", receipt.PurchaseDate)
-    day := receiptDate.Day()
+    parsedDate,_ := time.Parse("2006-01-02", myPurchaseDate)
+    day := parsedDate.Day()
 
     // 6 points if the day in the purchase date is odd
     if day % 2 == 1 {
@@ -105,12 +105,12 @@ func GetDayPoints(receipt Receipt) int {
 }
 
 // Returns the number of points earned based on the purchase time of the receipt
-func GetTimePoints(receipt Receipt) int {
+func GetTimePoints(myPurchaseTime string) int {
 
     // The hour and minutes of the purchase time 
-    receiptTime,_ := time.Parse("15:04", receipt.PurchaseTime)
-    hour := receiptTime.Hour()
-    minutes := receiptTime.Minute()
+    parsedTime,_ := time.Parse("15:04", myPurchaseTime)
+    hour := parsedTime.Hour()
+    minutes := parsedTime.Minute()
 
     // 10 points if the time of purchase is after 2:00pm and before 4:00pm
     if (hour == 14 && minutes > 0) || hour == 15 {
@@ -121,12 +121,12 @@ func GetTimePoints(receipt Receipt) int {
 }
 
 // Returns the number of points earned based on the description of the items in the receipt
-func GetDescriptionPoints(receipt Receipt) int {
+func GetDescriptionPoints(myItems []Item) int {
 
     sum := 0
 
     // Iterate through items on the receipt
-    for _, c := range receipt.Items {
+    for _, c := range myItems {
         desc := c.ShortDescription
         price,_ := c.Price.Float64()
 
