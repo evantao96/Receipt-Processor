@@ -5,7 +5,6 @@ import (
     "github.com/gin-gonic/gin"
     "github.com/google/uuid"
     "src/models"
-    "fmt"
 )
 
 // map of all receipt IDs to JSON receipt objects
@@ -20,7 +19,7 @@ func Process(c *gin.Context) {
 
     // Call BindJSON to bind the received JSON to newReceipt
     if err := c.BindJSON(&newReceipt); err != nil {
-        fmt.Println(err)
+        c.JSON(http.StatusBadRequest, "The receipt is invalid")
         return
     }
 
@@ -46,18 +45,12 @@ func GetPoints(c *gin.Context) {
 
     // if the ID does not exist in the receipts map, return
     if !ok {
-        c.JSON(http.StatusNotFound, "Receipt ID was not found")
+        c.JSON(http.StatusNotFound, "No receipt found for that id")
         return
     }
 
     // The number of points awarded to newReceipt
-    points := models.GetAlphaPoints(myReceipt.Retailer) 
-            + models.GetRoundTotalPoints(myReceipt.Total)
-            + models.GetMultiple25Points(myReceipt.Total)
-            + models.GetNumItemsPoints(myReceipt.Items)
-            + models.GetDayPoints(myReceipt.PurchaseDate)
-            + models.GetTimePoints(myReceipt.PurchaseTime)
-            + models.GetDescriptionPoints(myReceipt.Items)
+    points := models.GetAlphaPoints(myReceipt.Retailer) + models.GetRoundTotalPoints(myReceipt.Total) + models.GetMultiple25Points(myReceipt.Total) + models.GetNumItemsPoints(myReceipt.Items) + models.GetDayPoints(myReceipt.PurchaseDate) + models.GetTimePoints(myReceipt.PurchaseTime) + models.GetDescriptionPoints(myReceipt.Items)
 
     // Returns an object specifying the points awarded
     c.JSON(http.StatusOK, gin.H{"points": points})
