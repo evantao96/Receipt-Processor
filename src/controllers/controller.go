@@ -12,14 +12,14 @@ var allReceipts = make(map[string]models.Receipt)
 
 // POST /receipts/process
 // Process takes in a JSON receipt and responds with a JSON object containing an id for the receipt
-func Process(c *gin.Context) {
+func ProcessReceipt(c *gin.Context) {
 
     // The new receipt
     var newReceipt models.Receipt
 
     // Call BindJSON to bind the received JSON to newReceipt
     if err := c.BindJSON(&newReceipt); err != nil {
-        c.JSON(http.StatusBadRequest, "The receipt is invalid")
+        c.JSON(http.StatusBadRequest, gin.H{"status": "The receipt is invalid"})
         return
     }
 
@@ -45,7 +45,7 @@ func GetPoints(c *gin.Context) {
 
     // if the ID does not exist in the receipts map, return
     if !ok {
-        c.JSON(http.StatusNotFound, "No receipt found for that id")
+        c.JSON(http.StatusNotFound, gin.H{"status": "No receipt found for that id"})
         return
     }
 
