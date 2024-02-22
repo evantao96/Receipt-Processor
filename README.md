@@ -2,13 +2,13 @@
 
 ## User Instructions ##
 
-This program was written in Go and containerized with Docker. You can run the program by navigating into `src` and entering the following command:
+This program was written in Go and containerized with Docker. You can run the program by navigating to `src` and entering the following command:
 
 `docker build -t receipt . && docker run -p 8080:8080 receipt` 
 
 --- 
 
-You can execute the unit tests by navigating into `src/tests` and entering the following command: 
+You can execute the unit tests by navigating to `src/tests` and entering the following command: 
 
 `go test -v`
 
