@@ -19,7 +19,7 @@ func ProcessReceipt(c *gin.Context) {
 
     // Call BindJSON to bind the received JSON to newReceipt
     if err := c.BindJSON(&newReceipt); err != nil {
-        c.JSON(http.StatusBadRequest, gin.H{"status": "The receipt is invalid"})
+        c.String(http.StatusBadRequest, "The receipt is invalid")
         return
     }
 
@@ -45,7 +45,7 @@ func GetPoints(c *gin.Context) {
 
     // if the ID does not exist in the receipts map, return
     if !ok {
-        c.JSON(http.StatusNotFound, gin.H{"status": "No receipt found for that id"})
+        c.String(http.StatusNotFound, "No receipt found for that id")
         return
     }
 
