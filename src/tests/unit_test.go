@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"github.com/stretchr/testify/assert"
 	"src/models"
 	"testing"
 )
@@ -96,56 +97,49 @@ var descriptionTests = []itemTest{
 // Iterates through tests and prints the results
 func TestAlpha(t *testing.T){
 	for _, test := range alphaTests{
-		if output := models.GetAlphaPoints(test.arg); output != test.expected {
-			t.Errorf("Output %d not equal to expected %d", output, test.expected)
-		}
+		output := models.GetAlphaPoints(test.arg)
+		assert.Equal(t, output, test.expected)
 	}
 }
 
 func TestRoundTotal(t *testing.T){
 	for _, test := range roundTotalTests{
-		if output := models.GetRoundTotalPoints(test.arg); output != test.expected {
-			t.Errorf("Output %d not equal to expected %d", output, test.expected)
-		}
+		output := models.GetRoundTotalPoints(test.arg)
+		assert.Equal(t, output, test.expected)
 	}
 }
 
 func TestMultiple25(t *testing.T){
 	for _, test := range multiple25Tests{
-		if output := models.GetMultiple25Points(test.arg); output != test.expected {
-			t.Errorf("Output %d not equal to expected %d", output, test.expected)
-		}
+		output := models.GetMultiple25Points(test.arg)
+		assert.Equal(t, output, test.expected)
 	}
 }
 
 func TestDay(t *testing.T){
 	for _, test := range dayTests{
-		if output := models.GetDayPoints(test.arg); output != test.expected {
-			t.Errorf("Output %d not equal to expected %d", output, test.expected)
-		}
+		output := models.GetDayPoints(test.arg)
+		assert.Equal(t, output, test.expected)
 	}
 }
 
 func TestTime(t *testing.T){
 	for _, test := range timeTests{
-		if output := models.GetTimePoints(test.arg); output != test.expected {
-			t.Errorf("Output %d not equal to expected %d", output, test.expected)
-		}
+		output := models.GetTimePoints(test.arg)
+		assert.Equal(t, output, test.expected)
 	}
 }
 
 func TestNumItems(t *testing.T){
 	for _, test := range numItemsTests{
-		if output := models.GetNumItemsPoints(test.arg); output != test.expected {
-			t.Errorf("Output %d not equal to expected %d", output, test.expected)
-		}
+		output := models.GetNumItemsPoints(test.arg)
+		assert.Equal(t, output, test.expected)
 	}
 }
 
 func TestDescription(t *testing.T){
 	for _, test := range descriptionTests{
-		if output := models.GetDescriptionPoints(test.arg); output != test.expected {
-			t.Errorf("Output %d not equal to expected %d", output, test.expected)
-		}
+		output := models.GetDescriptionPoints(test.arg)
+		assert.Equal(t, output, test.expected)
 	}
 }
