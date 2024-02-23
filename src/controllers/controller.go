@@ -25,7 +25,7 @@ func ProcessReceipt(c *gin.Context) {
     id := uuid.New()
 
     // Add the new receipt ID and JSON object to the receipts map
-    dbs.AllReceipts[id.String()] = newReceipt
+    db.AllReceipts[id.String()] = newReceipt
 
     // Returns a JSON object with the ID
     c.JSON(http.StatusOK, gin.H{"id": id.String()})
@@ -39,7 +39,7 @@ func GetPoints(c *gin.Context) {
     id := c.Param("id")
 
     // Looks up the receipt in the receipts map
-    myReceipt, ok := dbs.AllReceipts[id]
+    myReceipt, ok := db.AllReceipts[id]
     if !ok {
         c.String(http.StatusNotFound, `No receipt found for that id`)
         return

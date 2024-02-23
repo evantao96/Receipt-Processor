@@ -1,4 +1,4 @@
-package dbs
+package db
 
 import (
 	"src/models"
