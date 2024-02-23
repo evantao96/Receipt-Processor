@@ -1,28 +1,31 @@
 package tests
 
 import (
-	"net/http"
-	"net/http/httptest"
-	"testing"
 	"bytes"
-	"src/controllers"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
-	"fmt"
+	"net/http"
+	"net/http/httptest"
+	"src/controllers"
+	"testing"
 )
 
+// Struct for expected HTTP code and body based on the receipt file
 type processReceiptTest struct {
 	arg string
 	expectedCode int
 	expectedBody string
 }
 
+// Struct for expected HTTP code and body based on receipt ID
 type getPointsTest struct {
 	arg string 
 	expectedCode int 
 	expectedBody string
 }
 
+// Tests for the expected HTTP code and body based on the receipt file
 var processReceiptTests = []processReceiptTest {
 	processReceiptTest{"json/test1.json", 200, `{"id":"^\\S+$"}`},
 	processReceiptTest{"json/test2.json", 200, `{"id":"^\\S+$"}`},
@@ -51,6 +54,7 @@ var getPointsTests = []getPointsTest {
 var id1 = ""
 var id2 = ""
 
+// Iterates through tests and prints the results
 func TestProcessReceipt(t *testing.T) {
     r := gin.Default()
     r.POST("/receipts/process", controllers.ProcessReceipt)
