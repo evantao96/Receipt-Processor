@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
-	"strings"
+	// "strings"
 	"src/controllers"
 	"testing"
 	// "fmt"
@@ -68,10 +68,9 @@ func TestProcessReceipt(t *testing.T) {
  		req, _ := http.NewRequest("POST", "/receipts/process", reader)
  		r.ServeHTTP(w, req)
  		outputCode := w.Code
+ 		outputBody := w.Body.String()
  		assert.Equal(t, outputCode, test.expectedCode)
- 		if outputBody := w.Body.String(); strings.Index(outputBody, test.expectedBody) < 0 {
-			t.Errorf(`Output body "%s" does not include expected body "%s"`, outputBody, test.expectedBody)
- 		}
+ 		assert.Contains(t, outputBody, test.expectedBody)
     }
 }
 
