@@ -25,6 +25,8 @@ type getPointsTest struct {
 	expectedBody string
 }
 
+
+
 // Tests for the expected HTTP code and body based on the receipt file
 var processReceiptTests = []processReceiptTest {
 	processReceiptTest{"json/test1.json", 200, `{"id":`},
