@@ -38,9 +38,9 @@ func GetAlphaPoints(myRetailer string) int {
     // alphanumeric characters 
     alphanumeric := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
-    // the number of alphanumeric characters in the retailer name
     count := 0
 
+    // the number of alphanumeric characters in the retailer name
     for _, c := range myRetailer {
         if strings.Index(alphanumeric, string(c)) >= 0 {
             count++
@@ -58,8 +58,9 @@ func GetRoundTotalPoints(myTotal string) int {
     fTotal,_ := strconv.ParseFloat(myTotal, 64)
     cents := int(fTotal * 100)
 
+    // 50 points if the total is a round dollar amount with no cents
     if cents % 100 == 0 {
-        return 50 // 50 points if the total is a round dollar amount with no cents
+        return 50 
     } else {
         return 0
     }
@@ -72,8 +73,9 @@ func GetMultiple25Points(myTotal string) int {
     fTotal,_ := strconv.ParseFloat(myTotal, 64)
     cents := int(fTotal * 100)
 
+    // 25 points if the total is a multiple of 25
     if cents % 25 == 0 {  
-        return 25 // 25 points if the total is a multiple of 25
+        return 25 
     } else {
         return 0
     }
