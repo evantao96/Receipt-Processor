@@ -1,14 +1,12 @@
 package controllers
-
+    
 import (
     "github.com/gin-gonic/gin"
     "github.com/google/uuid"
     "net/http"
     "src/models"
+    "src/dbs"
 )
-
-// map of all receipt IDs to JSON receipt objects
-var allReceipts = make(map[string]models.Receipt)
 
 // POST /receipts/process
 // Process takes in a JSON receipt and responds with a JSON object containing an id for the receipt
@@ -27,7 +25,7 @@ func ProcessReceipt(c *gin.Context) {
     id := uuid.New()
 
     // Add the new receipt ID and JSON object to the receipts map
-    allReceipts[id.String()] = newReceipt
+    dbs.AllReceipts[id.String()] = newReceipt
 
     // Returns a JSON object with the ID
     c.JSON(http.StatusOK, gin.H{"id": id.String()})
@@ -41,9 +39,9 @@ func GetPoints(c *gin.Context) {
     id := c.Param("id")
 
     // Looks up the receipt in the receipts map
-    myReceipt, ok := allReceipts[id]
+    myReceipt, ok := dbs.AllReceipts[id]
     if !ok {
-        c.String(http.StatusNotFound, "No receipt found for that id")
+        c.String(http.StatusNotFound, `No receipt found for that id`)
         return
     }
 

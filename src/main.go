@@ -4,7 +4,7 @@ import (
     "github.com/gin-gonic/gin"
     "src/controllers"
 )
-    
+
 func main() {
     r := gin.Default()
     r.POST("/receipts/process", controllers.ProcessReceipt)
