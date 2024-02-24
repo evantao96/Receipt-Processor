@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"src/models"
 	"src/controllers"
 	"testing"
 )
@@ -46,21 +47,26 @@ var processReceiptTests = []processReceiptTest {
 	processReceiptTest{"json/test17.json", 400, "The receipt is invalid"},
 }
 
+// Tests for the expected HTTP code and body based on the receipt ID
 var getPointsTests = []getPointsTest {
-	getPointsTest{"12345", 200, `{"points":"\d+"}`},
-	getPointsTest{"54321", 200, `{"points":"\d+"}`},
+	getPointsTest{"12345", 200, `{"points":\d+}`},
+	getPointsTest{"54321", 200, `{"points":\d+}`},
 	getPointsTest{"abc", 404, `No receipt found for that id`},
 
 }
 
 func TestProcessReceipt(t *testing.T) {
 
-	// Starts a new server
+	// Creates a mock empty receipt map
+	var mockReceipts = make(map[string]models.Receipt)
+
+	// Starts a new server and handler
 	gin.SetMode(gin.ReleaseMode)
     r := gin.Default()
-    r.POST("/receipts/process", controllers.ProcessReceipt)
+    h := controllers.ReceiptHandler{Receipts: mockReceipts}
+	r.POST("/receipts/process", h.ProcessReceipt)
 
-	// Iterates through tests and reads file data as POST input
+	// Iterates through tests and sends file data as POST input
     for _,test := range processReceiptTests{
     	w := httptest.NewRecorder()
     	file, _ := ioutil.ReadFile(test.arg)
@@ -77,9 +83,37 @@ func TestProcessReceipt(t *testing.T) {
 }
 
 func TestGetPoints(t *testing.T) {
-    r := gin.Default()
-    r.GET("/receipts/:id/points", controllers.GetPoints)
 
+	// Creates a mock receipt map with 2 IDs
+	var mockReceipts = map[string]models.Receipt{
+						"12345": models.Receipt{
+								  "M&M Corner Market",
+								  "2022-03-20",
+								  "14:33",
+								  []models.Item{models.Item{
+								      "Gatorade",
+								      "2.25",
+								    }},
+								  "2.25",
+								 },
+						"54321": models.Receipt{
+								  "Target",
+								  "2022-01-01",
+								  "13:01",
+								  []models.Item{models.Item{
+								      "Mountain Dew 12PK",
+								      "6.49",
+								    }},
+								  "6.49",
+								 },
+	}
+
+	// Starts a new server and handler
+    r := gin.Default()
+    h := controllers.ReceiptHandler{Receipts: mockReceipts}
+	r.GET("/receipts/:id/points", h.GetPoints)
+
+	// Iterates through tests and sends GET request 
     for _,test := range getPointsTests{
     	w := httptest.NewRecorder()
  		req, _ := http.NewRequest("GET", "/receipts/" + test.arg + "/points", nil)
