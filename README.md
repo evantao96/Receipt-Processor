@@ -16,8 +16,8 @@ You can execute the unit tests by navigating to `src/tests` and entering the fol
 
 ## Module Structure ## 
 
-Receipt-Processor/
-    ├── src/
+`Receipt-Processor/`
+`    ├── src/`
     |   ├── main.go
     |   ├── models/
     |   |   ├── model.go
@@ -33,7 +33,7 @@ Receipt-Processor/
     ├── Dockerfile
     ├── api.yml
     └── README.md
-    
+
 ---
 
 ## Overview ##
