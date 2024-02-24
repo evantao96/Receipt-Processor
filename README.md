@@ -14,6 +14,28 @@ You can execute the unit tests by navigating to `src/tests` and entering the fol
 
 ---
 
+## Module Structure ## 
+
+Receipt-Processor/
+    ├── src/
+    |   ├── main.go
+    |   ├── models/
+    |   |   ├── model.go
+    |   ├── controllers/
+    |   |   ├── controller.go
+    |   ├── tests/
+    |   |   └── unit_test.go
+    |   |   └── feature_test.go
+    |   |   └── json/
+    |   |   |   └── test*.json
+    |   ├── go.sum
+    |   └── go.mod
+    ├── Dockerfile
+    ├── api.yml
+    └── README.md
+    
+---
+
 ## Overview ##
 
 Build a webservice that fulfils the documented API. The API is described below. A formal definition is provided 
@@ -24,7 +46,8 @@ Provide any instructions required to run your application.
 
 Data does not need to persist when your application stops. It is sufficient to store information in memory. There are too many different database solutions, we will not be installing a database on our system when testing your application.
 
----
+--- 
+
 ## Summary of API Specification
 
 ### Endpoint: Process Receipts
