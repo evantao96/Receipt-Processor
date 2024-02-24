@@ -90,7 +90,7 @@ func TestGetPoints(t *testing.T) {
 								  "M&M Corner Market",
 								  "2022-03-20",
 								  "14:33",
-								  []models.Item{models.Item{
+								  []models.Item{{
 								      "Gatorade",
 								      "2.25",
 								    }},
@@ -100,7 +100,7 @@ func TestGetPoints(t *testing.T) {
 								  "Target",
 								  "2022-01-01",
 								  "13:01",
-								  []models.Item{models.Item{
+								  []models.Item{{
 								      "Mountain Dew 12PK",
 								      "6.49",
 								    }},
@@ -126,5 +126,3 @@ func TestGetPoints(t *testing.T) {
  		assert.Regexp(t, test.expectedBody, outputBody)
     }
 }
-
-
