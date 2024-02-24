@@ -62,15 +62,15 @@ var timeTests = []modelTest{
 
 // Tests for the number of points earned based on the number of items in the receipt
 var numItemsTests = []itemTest{
-	itemTest{[]models.Item{{"Pepsi - 12-oz", "1.25"}}, 0},
-	itemTest{[]models.Item{{"Pepsi - 12-oz", "1.25"}, 
+				{[]models.Item{{"Pepsi - 12-oz", "1.25"}}, 0},
+				{[]models.Item{{"Pepsi - 12-oz", "1.25"}, 
 						   {"Dasani", "1.40"}}, 5},
-	itemTest{[]models.Item{{"Mountain Dew 12PK", "6.49"}, 
+				{[]models.Item{{"Mountain Dew 12PK", "6.49"}, 
 						   {"Emils Cheese Pizza", "12.25"},
 						   {"Knorr Creamy Chicken", "1.26"},
 						   {"Doritos Nacho Cheese", "3.35"},
 						   {"   Klarbrunn 12-PK 12 FL OZ  ", "12.00"},}, 10},
-	itemTest{[]models.Item{{"Gatorade", "2.25"}, 
+				{[]models.Item{{"Gatorade", "2.25"}, 
 						   {"Gatorade", "2.25"}, 
 						   {"Gatorade", "2.25"}, 
 						   {"Gatorade", "2.25"}, 
@@ -79,15 +79,15 @@ var numItemsTests = []itemTest{
 
 // Tests for the number of points earned based on the description of the items in the receipt
 var descriptionTests = []itemTest{
-	itemTest{[]models.Item{{"Pepsi - 12-oz", "1.25"}}, 0},
-	itemTest{[]models.Item{{"Pepsi - 12-oz", "1.25"}, 
+				{[]models.Item{{"Pepsi - 12-oz", "1.25"}}, 0},
+				{[]models.Item{{"Pepsi - 12-oz", "1.25"}, 
 						   {"Dasani", "1.40"}}, 1},
-	itemTest{[]models.Item{{"Mountain Dew 12PK", "6.49"}, 
+				{[]models.Item{{"Mountain Dew 12PK", "6.49"}, 
 						   {"Emils Cheese Pizza", "12.25"},
 						   {"Knorr Creamy Chicken", "1.26"},
 						   {"Doritos Nacho Cheese", "3.35"},
 						   {"   Klarbrunn 12-PK 12 FL OZ  ", "12.00"},}, 6},
-	itemTest{[]models.Item{{"Gatorade", "2.25"}, 
+				{[]models.Item{{"Gatorade", "2.25"}, 
 						   {"Gatorade", "2.25"}, 
 						   {"Gatorade", "2.25"}, 
 						   {"Gatorade", "2.25"}, 
