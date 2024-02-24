@@ -53,17 +53,22 @@ var getPointsTests = []getPointsTest {
 
 }
 
-// Iterates through tests and prints the results
 func TestProcessReceipt(t *testing.T) {
+
+	// Starts a new server
 	gin.SetMode(gin.ReleaseMode)
     r := gin.Default()
     r.POST("/receipts/process", controllers.ProcessReceipt)
+
+	// Iterates through tests and reads file data as POST input
     for _,test := range processReceiptTests{
     	w := httptest.NewRecorder()
     	file, _ := ioutil.ReadFile(test.arg)
  		reader := bytes.NewReader(file)
  		req, _ := http.NewRequest("POST", "/receipts/process", reader)
  		r.ServeHTTP(w, req)
+
+ 		// Checks if HTTP code and body match the expected results
  		outputCode := w.Code
  		outputBody := w.Body.String()
  		assert.Equal(t, test.expectedCode, outputCode)
@@ -74,10 +79,13 @@ func TestProcessReceipt(t *testing.T) {
 func TestGetPoints(t *testing.T) {
     r := gin.Default()
     r.GET("/receipts/:id/points", controllers.GetPoints)
+
     for _,test := range getPointsTests{
     	w := httptest.NewRecorder()
  		req, _ := http.NewRequest("GET", "/receipts/" + test.arg + "/points", nil)
  		r.ServeHTTP(w, req)
+
+ 		// Checks if HTTP code and body match the expected results
  		outputCode := w.Code
  		outputBody := w.Body.String()
  		assert.Equal(t, test.expectedCode, outputCode)
