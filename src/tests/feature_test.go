@@ -62,8 +62,8 @@ func TestProcessReceipt(t *testing.T) {
 
 	// Starts a new server and handler
 	gin.SetMode(gin.ReleaseMode)
-    r := gin.Default()
-    h := controllers.ReceiptHandler{Receipts: mockReceipts}
+	r := gin.Default()
+	h := controllers.ReceiptHandler{Receipts: mockReceipts}
 	r.POST("/receipts/process", h.ProcessReceipt)
 
 	// Iterates through tests and sends file data as POST input
