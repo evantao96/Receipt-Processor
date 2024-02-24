@@ -98,48 +98,48 @@ var descriptionTests = []itemTest{
 func TestAlpha(t *testing.T){
 	for _, test := range alphaTests{
 		output := models.GetAlphaPoints(test.arg)
-		assert.Equal(t, output, test.expected)
+		assert.Equal(t, test.expected, output)
 	}
 }
 
 func TestRoundTotal(t *testing.T){
 	for _, test := range roundTotalTests{
 		output := models.GetRoundTotalPoints(test.arg)
-		assert.Equal(t, output, test.expected)
+		assert.Equal(t, test.expected, output)
 	}
 }
 
 func TestMultiple25(t *testing.T){
 	for _, test := range multiple25Tests{
 		output := models.GetMultiple25Points(test.arg)
-		assert.Equal(t, output, test.expected)
+		assert.Equal(t, test.expected, output)
 	}
 }
 
 func TestDay(t *testing.T){
 	for _, test := range dayTests{
 		output := models.GetDayPoints(test.arg)
-		assert.Equal(t, output, test.expected)
+		assert.Equal(t, test.expected, output)
 	}
 }
 
 func TestTime(t *testing.T){
 	for _, test := range timeTests{
 		output := models.GetTimePoints(test.arg)
-		assert.Equal(t, output, test.expected)
+		assert.Equal(t, test.expected, output)
 	}
 }
 
 func TestNumItems(t *testing.T){
 	for _, test := range numItemsTests{
 		output := models.GetNumItemsPoints(test.arg)
-		assert.Equal(t, output, test.expected)
+		assert.Equal(t, test.expected, output)
 	}
 }
 
 func TestDescription(t *testing.T){
 	for _, test := range descriptionTests{
 		output := models.GetDescriptionPoints(test.arg)
-		assert.Equal(t, output, test.expected)
+		assert.Equal(t, test.expected, output)
 	}
 }

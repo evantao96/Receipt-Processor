@@ -25,12 +25,10 @@ type getPointsTest struct {
 	expectedBody string
 }
 
-
-
 // Tests for the expected HTTP code and body based on the receipt file
 var processReceiptTests = []processReceiptTest {
-	processReceiptTest{"json/test1.json", 200, `{"id":`},
-	processReceiptTest{"json/test2.json", 200, `{"id":`},
+	processReceiptTest{"json/test1.json", 200, `{"id":"\S+"}`},
+	processReceiptTest{"json/test2.json", 200, `{"id":"\S+"}`},
 	processReceiptTest{"json/test3.json", 400, "The receipt is invalid"},
 	processReceiptTest{"json/test4.json", 400, "The receipt is invalid"},
 	processReceiptTest{"json/test5.json", 400, "The receipt is invalid"},
@@ -49,8 +47,8 @@ var processReceiptTests = []processReceiptTest {
 }
 
 var getPointsTests = []getPointsTest {
-	getPointsTest{"12345", 200, `{"points":`},
-	getPointsTest{"54321", 200, `{"points":`},
+	getPointsTest{"12345", 200, `{"points":"\d+"}`},
+	getPointsTest{"54321", 200, `{"points":"\d+"}`},
 	getPointsTest{"abc", 404, `No receipt found for that id`},
 
 }
@@ -68,8 +66,8 @@ func TestProcessReceipt(t *testing.T) {
  		r.ServeHTTP(w, req)
  		outputCode := w.Code
  		outputBody := w.Body.String()
- 		assert.Equal(t, outputCode, test.expectedCode)
- 		assert.Contains(t, outputBody, test.expectedBody)
+ 		assert.Equal(t, test.expectedCode, outputCode)
+ 		assert.Regexp(t, test.expectedBody, outputBody)
     }
 }
 
@@ -82,8 +80,8 @@ func TestGetPoints(t *testing.T) {
  		r.ServeHTTP(w, req)
  		outputCode := w.Code
  		outputBody := w.Body.String()
- 		assert.Equal(t, outputCode, test.expectedCode)
- 		assert.Contains(t, outputBody, test.expectedBody)
+ 		assert.Equal(t, test.expectedCode, outputCode)
+ 		assert.Regexp(t, test.expectedBody, outputBody)
     }
 }
 
